@@ -1,7 +1,6 @@
 library(readxl)
 library(tidyverse)
 
-setwd("~/CNR/Solemon/Lavori/2021/Coro/Phase2_assessment")
 species='SJA'
 species_name='Pecten_jacobaeus'
 
@@ -104,18 +103,9 @@ prop_data=new_data(observed2020, methods_all, 'proportional')
 prop=calculate_index(prop_data, StrataWeight, 'prop');prop
 
 
-# plot
+# merge data
 fulldat=rbind(Trust_index, diva,ssa,pred,prop)
 
-
-ggplot()+
-  geom_point(data=fulldat[fulldat$year=='2020',], aes(x=year,y=survey_data, color=source))+
-  geom_line(data=fulldat[fulldat$source=='Trust',], aes(x=year,y=survey_data))
-
-ggplot()+
-  geom_point(data=fulldat[fulldat$year=='2020',], aes(x=year,y=survey_data, color=source))+
-  geom_line(data=fulldat[fulldat$source=='Trust',], aes(x=year,y=survey_data))+
-  scale_x_continuous(limits = c(2018,2020), breaks=seq(2018,2020,1))
 
 
 
@@ -176,8 +166,24 @@ write.csv(amsy_dat, file.path('AMSY', paste(species, 'CPUE.csv', sep='_')))
 
 write.csv(amsy_id, file.path('AMSY', paste(species, 'ID.csv', sep='_')))
 
-  
-  
+
+# some plots
+ggplot()+
+  geom_point(data=amsy_dat[amsy_dat$Year==2020,], aes(x=Year,y=CPUE, color=Stock))+
+  geom_line(data=amsy_dat, aes(x=Year,y=CPUE, color=Stock))+
+  ggtitle(species_name)+
+  theme_bw()
+
+ggsave(paste0('plots/',species ,'_index.jpeg'), width = 15, height = 10, units='cm')
+
+ggplot()+
+  geom_point(data=amsy_dat[amsy_dat$Year==2020,], aes(x=Year,y=CPUE, color=Stock))+
+  geom_line(data=amsy_dat, aes(x=Year,y=CPUE, color=Stock))+
+  scale_x_continuous(limits = c(2018,2020), breaks=seq(2018,2020,1))+
+  ggtitle(species_name)+
+  theme_bw()
+
+ggsave(paste0('plots/',species ,'_index_lastyears.jpeg'), width = 15, height = 10, units='cm')
 
 
 
