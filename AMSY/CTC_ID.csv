@@ -1,0 +1,6 @@
+"","CPUE_File","Stock","Name","EnglishName","ScientificName","StartYear","EndYear","Resilience","r.low","r.hi","Bk.yr","Bk.pr","Bk.pr.low","Bk.pr.hi","e.creep","Comment","Source","MSY.BSM","MSY.BSM.lcl","MSY.BSM.ucl","r.BSM","r.BSM.lcl","r.BSM.ucl","k.BSM","k.BSM.lcl","k.BSM.ucl","B_Bmsy","B_Bmsy.lcl","B_Bmsy.ucl","F_Fmsy","F_Fmsy.lcl","F_Fmsy.ucl"
+"1","CTC_CPUE.csv","CTC_Trust","Sepia_officinalis","b","d (West and Southwest of Ireland",2005,2020,"Medium",0.37,0.84,2007,"More than half",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"2","CTC_CPUE.csv","CTC_diva","Sepia_officinalis","b","d (West and Southwest of Ireland",2005,2020,"Medium",0.37,0.84,2007,"More than half",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"3","CTC_CPUE.csv","CTC_prop","Sepia_officinalis","b","d (West and Southwest of Ireland",2005,2020,"Medium",0.37,0.84,2007,"More than half",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"4","CTC_CPUE.csv","CTC_ssa","Sepia_officinalis","b","d (West and Southwest of Ireland",2005,2020,"Medium",0.37,0.84,2007,"More than half",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"5","CTC_CPUE.csv","CTC_pred","Sepia_officinalis","b","d (West and Southwest of Ireland",2005,2020,"Medium",0.37,0.84,2007,"More than half",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
