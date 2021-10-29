@@ -114,7 +114,7 @@ amsy_ID_template <- read_csv("AMSY/EU_Stocks_ID_template.csv")
 methods=c('Trust', 'diva','prop','ssa','pred')
 
 # define AMSY priors
-resilience_qual=if(species=='CTC'){'Medium'}else{'Medium'}
+resilience_qual=if(species=='CTC'){'Medium'}else if(species=="SJA"){'Medium'}else if(species=="SOL"){'Medium'}else if(species=="MTS"){'Medium'}
 resilience_low=if(species=='CTC'){0.37}else{NA}
 resilience_high=if(species=='CTC'){0.84}else{NA}
 biom_year=if(species=='CTC'){2007}else{2019}
