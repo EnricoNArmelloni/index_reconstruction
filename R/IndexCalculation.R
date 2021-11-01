@@ -1,8 +1,8 @@
 library(readxl)
 library(tidyverse)
 
-species='SJA'
-species_name='Pecten_jacobaeus'
+species='MTS'
+species_name='Squilla_mantis'
 
 # Import Data
 HaulBiomass <- read_excel(paste0("data/trust_indices/",species,"_haul.xlsx")) # Biomass Index by Haul
@@ -115,11 +115,11 @@ methods=c('Trust', 'diva','prop','ssa','pred')
 
 # define AMSY priors
 resilience_qual=if(species=='CTC'){'Medium'}else if(species=="SJA"){'Medium'}else if(species=="SOL"){'Medium'}else if(species=="MTS"){'Medium'}
-resilience_low=if(species=='CTC'){0.37}else{NA}
-resilience_high=if(species=='CTC'){0.84}else{NA}
-biom_year=if(species=='CTC'){2007}else{2019}
-biom_prior=if(species=='CTC'){'More than half'}else{'Small'} # options: 'Very small' 'Small' 'About half' 'More than half' 'Close to unexploited'
-creep=if(species=='CTC'){NA}else{NA}
+resilience_low=if(species=='CTC'){0.37}else if(species=="SJA"){NA}else if(species=="SOL"){0.33}else if(species=="MTS"){0.37}
+resilience_high=if(species=='CTC'){0.84}else if(species=="SJA"){NA}else if(species=="SOL"){0.76}else if(species=="MTS"){0.84}
+biom_year=if(species=='CTC'){2007}else if(species=="SJA"){2019}else if(species=="SOL"){2018}else if(species=="MTS"){2020}
+biom_prior=if(species=='CTC'){'More than half'}else if(species=="SJA"){'Small'}else if(species=="SOL"){'About half'}else if(species=="MTS"){'About half'} # options: 'Very small' 'Small' 'About half' 'More than half' 'Close to unexploited'
+creep=if(species=='CTC'){NA}else if(species=="SJA"){NA}else if(species=="SOL"){NA}else if(species=="MTS"){NA}
 
 # cpue file
 amsy_dat=NULL
