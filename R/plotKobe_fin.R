@@ -64,25 +64,25 @@ plotKobe_fin <- function (kb, joint = TRUE, year = NULL, posterior = c("points",
    legend("topright", paste(r), bty = "n", cex = 1.2, 
            pch = 21, pt.bg = sscol(n, 1), col = 1, pt.cex = 1.8)
   }
-  b = kb$stock
-  f = kb$harvest
-  Pr.green = sum(ifelse(b > 1 & f < 1, 1, 0))/length(b) * 100
-  Pr.red = sum(ifelse(b < 1 & f > 1, 1, 0))/length(b) * 100
-  Pr.yellow = sum(ifelse(b < 1 & f < 1, 1, 0))/length(b) * 
-    100
-  Pr.orange = sum(ifelse(b > 1 & f > 1, 1, 0))/length(b) * 
-    100
-  out = data.frame(Quadrant = c("Red", "Orange", 
-                                "Yellow", "Green"), Percent = c(Pr.red, Pr.orange, 
-                                                                Pr.yellow, Pr.green))
-  if (legend == T & fill == T) {
-    legend(legendpos, paste0(round(c(Pr.red, Pr.orange, Pr.yellow, 
-                                     Pr.green), 1), "%"), lty = c(rep(-1, 3)), pch = c(rep(22, 
-                                                                                           3)), pt.bg = c("red", "orange", "yellow", 
-                                                                                                          "green"), col = 1, lwd = 1.1, cex = legendcex, 
-           pt.cex = c(rep(2, 3)), bty = 1, x.intersp = 0.2, 
-           y.intersp = 1.4)
-  }
+ # b = kb$stock
+#  f = kb$harvest
+#  Pr.green = sum(ifelse(b > 1 & f < 1, 1, 0))/length(b) * 100
+#  Pr.red = sum(ifelse(b < 1 & f > 1, 1, 0))/length(b) * 100
+#  Pr.yellow = sum(ifelse(b < 1 & f < 1, 1, 0))/length(b) * 
+#    100
+#  Pr.orange = sum(ifelse(b > 1 & f > 1, 1, 0))/length(b) * 
+#    100
+#  out = data.frame(Quadrant = c("Red", "Orange", 
+ #                               "Yellow", "Green"), Percent = c(Pr.red, Pr.orange, 
+ #                                                               Pr.yellow, Pr.green))
+ # if (legend == T & fill == T) {
+#    legend(legendpos, paste0(round(c(Pr.red, Pr.orange, Pr.yellow, 
+ #                                    Pr.green), 1), "%"), lty = c(rep(-1, 3)), pch = c(rep(22, 
+#                                                                                           3)), pt.bg = c("red", "orange", "yellow", 
+#                                                                                                          "green"), col = 1, lwd = 1.1, cex = legendcex, 
+ #          pt.cex = c(rep(2, 3)), bty = 1, x.intersp = 0.2, 
+#           y.intersp = 1.4)
+#  }
   if (verbose == TRUE) {
     return(out)
   }
