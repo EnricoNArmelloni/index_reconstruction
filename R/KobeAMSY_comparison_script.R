@@ -8,8 +8,8 @@ out_MTS <- read_csv(paste0("AMSY/Out_man/Out_novembre012021_MTS_ID.csv"))
 out_CTC <- read_csv(paste0("AMSY/Out_man/Out_ottobre262021_CTC_ID.csv"))
 out_SJA <- read_csv(paste0("AMSY/Out_man/Out_ottobre262021_SJA_ID.csv"))
 
-species <- "MTS"  
-out <- out_MTS # put the output of species of interest
+species <- "SJA"  
+out <- out_SJA # put the output of species of interest
 
 methods=c('Trust', 'diva','prop','ssa','pred')
 amsy_kobe=NULL
@@ -36,5 +36,5 @@ for(i in 1:length(methods)){
 ##########################
 source(paste0("R/plotkobe_fin.R"))
 sspar(mfrow=c(1,1),plot.cex = 0.9)
-plotKobe_fin(amsy_kobe,fill=T,joint=F,posterior="points",ylab="B/BMSY",xlab="F/FMSY", legendruns = TRUE)
+plotKobe_fin(amsy_kobe,fill=T,joint=F,posterior="points",ylab="F/FMSY",xlab="B/BMSY", legendruns = TRUE)
 dev.print(jpeg,paste0("Kobe_AMSY_final_" ,species, ".jpg"), width = 12, height = 8, res = 300, units = "in") 
