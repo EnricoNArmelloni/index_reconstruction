@@ -36,7 +36,7 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # set working direct
 #-----------------------------------------
 # Required settings, File names 
 #-----------------------------------------
- id_file     <- "SJA_ID.csv" #   name of file containing stock-specific info and settings for the analysis
+ id_file     <- "MTS_ID.csv" #   name of file containing stock-specific info and settings for the analysis
  outfile     <- paste("Out_",format(Sys.Date(),format="%B%d%Y_"),id_file,sep="") # default name for output file
 
  #----------------------------------------
