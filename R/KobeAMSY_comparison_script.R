@@ -5,11 +5,12 @@ library(dplyr)
 
 out_SOL <- read_csv(paste0("AMSY/Out_man/Out_novembre012021_SOL_ID.csv"))
 out_MTS <- read_csv(paste0("AMSY/Out_man/Out_novembre012021_MTS_ID.csv"))
-out_CTC <- read_csv(paste0("AMSY/Out_man/Out_ottobre262021_CTC_ID.csv"))
+out_CTC <- read_delim("AMSY/Out_man/Out_ottobre262021_CTC_ID.csv", 
+                      ";", escape_double = FALSE, trim_ws = TRUE)
 out_SJA <- read_csv(paste0("AMSY/Out_man/Out_ottobre262021_SJA_ID.csv"))
 
-species <- "SJA"  
-out <- out_SJA # put the output of species of interest
+species <- "CTC"  
+out <- out_CTC # put the output of species of interest
 
 methods=c('Trust', 'diva','prop','ssa','pred')
 amsy_kobe=NULL
