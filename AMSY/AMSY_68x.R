@@ -36,7 +36,7 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # set working direct
 #-----------------------------------------
 # Required settings, File names 
 #-----------------------------------------
- id_file     <- "MTS_ID.csv" #   name of file containing stock-specific info and settings for the analysis
+ id_file     <- "CTC_ID.csv" #   name of file containing stock-specific info and settings for the analysis
  outfile     <- paste("Out_",format(Sys.Date(),format="%B%d%Y_"),id_file,sep="") # default name for output file
 
  #----------------------------------------
@@ -71,6 +71,11 @@ save.plots   <- T # set to TRUE to save graphs to JPEG files
 close.plots  <- T # set to TRUE to close on-screen plots, to avoid "too many open devices" error in batch-processing;
 retros       <- F # retrospective analysis, requires do.plots <- TRUE
 
+# Additional settings
+save_extra_info=T
+need_raising='T'
+area=91300 # area of the basin
+save_trajectories=T
 #----------------------------------------------
 #  FUNCTIONS ----
 #----------------------------------------------
@@ -188,6 +193,8 @@ mvn   <- function(n,mean.log.r,sd.log.r,mean.log.kq,sd.log.kq) {
 #--------------------------------------------
 # Create table for output to csv file
 #--------------------------------------------
+if(save_extra_info==T){source('supp_funs.R')}
+
 if(write.output==T && substr(id_file,1,3)=="Sim"){ # output for simulated data
   outheaders = data.frame("Stock","r.true", "r.est","r.lcl","r.ucl",
                           "kq.true","kq.est","kq.lcl","kq.ucl",
@@ -903,6 +910,54 @@ if (retros.nyears>0 && do.plots==T){
 	              dec = ".", row.names = FALSE, col.names = FALSE)
 	} # end of regular output
 
+	# Addition to extract additional results
+	
+	trajectories_fun(Bdat = BBmsy.retrospective,
+	                 Fdat = FFmsy,
+	                 Xstock = stock)
+	
+	parameters_fun(r_dat = rv.est,
+	               k_dat = kqv.est,
+	               f_dat = cqt.median[nyr-1]/cpuet.median[nyr-1],
+	               b_dat = BBmsy.end,
+	               cpue_dat= cpuet.median[nyr] ,
+	               Xstock = stock,
+	               xarea= area)
+	
+	
+	
+	
 } # end loop on stocks
 
+# Additional code to save trajectories
+if(save_trajectories==T){
+  
+  temp = list.files(path='Stock_trajectories' ,pattern="*.csv")
+  temp=paste0('Stock_trajectories/', temp)
+  myfiles = do.call(rbind.data.frame, lapply(temp, read.csv))
+  
+  
+  library(ggplot2)
+  ggsave(plot=ggpubr::ggarrange(
+    
+    ggplot(data=myfiles)+
+      geom_line(aes(x=year, y=BBmsy, color=species))+
+      ylab(expression('B/B'[MSY]))+
+      geom_hline(yintercept = 1, linetype=2)+
+      theme_bw()
+    ,
+    ggplot(data=myfiles)+
+      geom_line(aes(x=year, y=Fdat, color=species))+
+      ylab(expression('F/F'[MSY]))+
+      theme_bw()+
+      geom_hline(yintercept = 1, linetype=2),
+    common.legend = T
+    
+    ,nrow=2),
+    paste0(substr(unique(myfiles$species)[1],1,3),'_trajectories.png'),
+    width = 20,
+    height = 15,
+    units='cm')
+  
+}
 
