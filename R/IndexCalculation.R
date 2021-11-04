@@ -186,4 +186,33 @@ ggplot()+
 ggsave(paste0('plots/',species ,'_index_lastyears.jpeg'), width = 15, height = 10, units='cm')
 
 
+##### compile table with priors ####
+xspecies=c("CTC", "MTS", "SJA", "SOL")
+mypriors=NA
+for(i in 1:length(xspecies)){
+  
+  species=xspecies[i]
+  
+  resilience_qual=if(species=='CTC'){'Medium'}else if(species=="SJA"){'Medium'}else if(species=="SOL"){'Medium'}else if(species=="MTS"){'Medium'}
+  
+  resilience_low=if(species=='CTC'){0.37}else if(species=="SJA"){NA}else if(species=="SOL"){0.33}else if(species=="MTS"){0.37}
+  
+  resilience_high=if(species=='CTC'){0.84}else if(species=="SJA"){NA}else if(species=="SOL"){0.76}else if(species=="MTS"){0.84}
+  
+  biom_year=if(species=='CTC'){2007}else if(species=="SJA"){2019}else if(species=="SOL"){2018}else if(species=="MTS"){2020}
+  
+  biom_prior=if(species=='CTC'){'More than half'}else if(species=="SJA"){'Small'}else if(species=="SOL"){'About half'}else if(species=="MTS"){'About half'} # options: 'Very small' 'Small' 'About half' 'More than half' 'Close to unexploited'
+  
+  creep=if(species=='CTC'){NA}else if(species=="SJA"){NA}else if(species=="SOL"){NA}else if(species=="MTS"){NA}
+  
+  mypriors=rbind(mypriors, data.frame(species, resilience_qual, resilience_low, resilience_high, biom_year, biom_prior))
+  
+  mypriors = mypriors[!is.na(mypriors$species),]
+  
+  
+}
+
+write.csv(mypriors, "AMSY/summary_priors.csv", row.names = F)
+
+
 
