@@ -1,8 +1,8 @@
 library(readxl)
 library(tidyverse)
 
-species='MTS'
-species_name='Squilla_mantis'
+species='CTC'
+species_name='Sepia_officinalis'
 
 # Import Data
 HaulBiomass <- read_excel(paste0("data/trust_indices/",species,"_haul.xlsx")) # Biomass Index by Haul
@@ -214,5 +214,78 @@ for(i in 1:length(xspecies)){
 
 write.csv(mypriors, "AMSY/summary_priors.csv", row.names = F)
 
+### CMSY ####
 
+# catch file
+xlanding=read.csv(paste0("data/landings/", species, ".csv" ))
+
+xstocks=unique(amsy_dat$Stock)
+
+
+cmsy_dat=data.frame(Stock=rep(xstocks, each=nrow(xlanding)),
+           Year= rep(xlanding$year, length(xstocks)),
+           ct=rep(xlanding$tons, length(xstocks)))
+
+cmsy_dat=cmsy_dat%>%
+  left_join(amsy_dat, by=c('Year', 'Stock'))%>%
+  dplyr::select(Stock, 'yr'=Year,ct,'bt'=CPUE)
+
+
+# id file
+cmsy_ID_template <- read_csv("CMSY/Stocks_ID_template.csv")
+cmsy_ID_template=cmsy_ID_template[1,]
+
+# define CMSY extra priors
+stb.low=if(species=='CTC'){0.6}else if(species=="SJA"){0.4}else if(species=="SOL"){'Medium'}else if(species=="MTS"){'Medium'}
+stb.high=if(species=='CTC'){0.9}else if(species=="SJA"){0.85}else if(species=="SOL"){0.33}else if(species=="MTS"){0.37}
+
+endb.low=if(species=='CTC'){0.21}else if(species=="SJA"){0.1}else if(species=="SOL"){'Medium'}else if(species=="MTS"){'Medium'}
+endb.high=if(species=='CTC'){0.7}else if(species=="SJA"){0.4}else if(species=="SOL"){0.33}else if(species=="MTS"){0.37}
+
+int.yr=if(species=='CTC'){2004}else if(species=="SJA"){2012}else if(species=="SOL"){'Medium'}else if(species=="MTS"){'Medium'}
+intb.low=if(species=='CTC'){0.1}else if(species=="SJA"){0.1}else if(species=="SOL"){'Medium'}else if(species=="MTS"){'Medium'}
+intb.high=if(species=='CTC'){0.4}else if(species=="SJA"){0.4}else if(species=="SOL"){0.33}else if(species=="MTS"){0.37}
+
+
+creep=if(species=='CTC'){NA}else if(species=="SJA"){NA}else if(species=="SOL"){NA}else if(species=="MTS"){NA}
+
+cmsy_id=NULL
+
+for(i in 1:length(methods)){
+  cat(i)
+  
+  # id
+  cmsy_id_i=cmsy_ID_template
+  
+  cmsy_id_i$Stock=paste(species, methods[i], sep='_')
+  cmsy_id_i$Name=species_name
+  cmsy_id_i$StartYear=min(cmsy_dat$yr)
+  cmsy_id_i$MinOfYear=min(cmsy_dat$yr)
+  cmsy_id_i$EndYear=max(cmsy_dat$yr)
+  cmsy_id_i$MaxOfYear=max(cmsy_dat$yr)
+  cmsy_id_i$Resilience=resilience_qual
+  cmsy_id_i$r.low=resilience_low
+  cmsy_id_i$r.hi=resilience_high
+  
+  cmsy_id_i$stb.low=stb.low
+  cmsy_id_i$stb.hi=stb.high
+  
+  cmsy_id_i$endb.low=endb.low
+  cmsy_id_i$endb.hi=endb.high
+  
+  cmsy_id_i$int.yr=int.yr
+  cmsy_id_i$intb.low=intb.low
+  cmsy_id_i$intb.hi=intb.high
+  
+ 
+  cmsy_id_i$e.creep=creep
+  
+  cmsy_id=rbind(cmsy_id, cmsy_id_i)
+  
+  
+}
+
+write.csv(cmsy_dat, file.path('CMSY', paste(species, 'CPUE.csv', sep='_')))
+
+write.csv(cmsy_id, file.path('CMSY', paste(species, 'ID.csv', sep='_')))
 
